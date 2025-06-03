@@ -125,14 +125,14 @@ test('Sign in and order', async ({ page }) => {
 
     await expect(async () => {
 
-    await page.getByRole('button', { name: 'Please choose Size' }).click({ timeout: 500 });
+      await page.getByRole('button', { name: 'Please choose Size' }).click({ timeout: 500 });
 
-    await page.locator('#product-variant-picker label').filter({ hasText: 'M' }).click({ timeout: 500 });
+      await page.locator('#product-variant-picker label').filter({ hasText: 'M' }).click({ timeout: 500 });
 
-    await expect(page.getByRole('button', { name: 'Size: M' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Size: M' })).toBeVisible();
 
     }).toPass();
-    
+
     await page.getByRole('button', { name: 'Add to Cart' }).click();
 
     // Assertions if the product is successfully added to the cart
@@ -143,10 +143,10 @@ test('Sign in and order', async ({ page }) => {
 
     await expect(page.getByText('Promotion -$10.00')).toBeVisible();
 
-});
+  });
 
 
-await test.step('Go to checkout and add new address (if there is no existing)', async () => {
+  await test.step('Go to checkout and add new address (if there is no existing)', async () => {
 
     await page.getByRole('link', { name: 'Checkout', exact: true }).click();
 
@@ -187,54 +187,54 @@ await test.step('Go to checkout and add new address (if there is no existing)', 
 
     await expect(page).toHaveURL(/\/checkout\/.*\/delivery/, { timeout: 10000 });
 
-});
+  });
 
-await test.step('Assert delivery options', async () => {
+  await test.step('Assert delivery options', async () => {
 
-  // Assert Standard shipping shows $5.00
-  await expect(page.getByText('Standard').locator('..')).toContainText('$5.00');
+    // Assert Standard shipping shows $5.00
+    await expect(page.getByText('Standard').locator('..')).toContainText('$5.00');
 
-  // Assert Premium shipping shows $10.00
-  await expect(page.getByText('Premium').locator('..')).toContainText('$10.00');
+    // Assert Premium shipping shows $10.00
+    await expect(page.getByText('Premium').locator('..')).toContainText('$10.00');
 
-  // Assert Next Day shipping shows $15.00
-  await expect(page.getByText('Next Day').locator('..')).toContainText('$15.00');
+    // Assert Next Day shipping shows $15.00
+    await expect(page.getByText('Next Day').locator('..')).toContainText('$15.00');
 
-  await page.getByRole('button', { name: 'Save and Continue' }).click();
+    await page.getByRole('button', { name: 'Save and Continue' }).click();
 
   })
 
-await test.step('Enter payment details and pay', async () => {
+  await test.step('Enter payment details and pay', async () => {
 
-  await expect(page).toHaveURL(/\/checkout\/.*\/payment/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/checkout\/.*\/payment/, { timeout: 10000 });
 
-  await expect(page.getByText(`Account TEST USER FIRST TEST USER LAST ${newUser}`)).toBeVisible();
+    await expect(page.getByText(`Account TEST USER FIRST TEST USER LAST ${newUser}`)).toBeVisible();
 
-  await expect(page.getByText('TEST USER FIRST TEST USER LAST, TEST STREET, TEST CITY, 1234, Philippines')).toBeVisible();
+    await expect(page.getByText('TEST USER FIRST TEST USER LAST, TEST STREET, TEST CITY, 1234, Philippines')).toBeVisible();
 
-  await expect(page.getByText('Standard · $5.00')).toBeVisible();
+    await expect(page.getByText('Standard · $5.00')).toBeVisible();
 
-  if (await page.getByRole('radio', { name: 'Add a new card' }).isHidden()) {
+    if (await page.getByRole('radio', { name: 'Add a new card' }).isHidden()) {
 
-    const paymentiframe = page.frameLocator('iframe[title="Secure payment input frame"]'); // iFrame of the payment section
+      const paymentiframe = page.frameLocator('iframe[title="Secure payment input frame"]'); // iFrame of the payment section
 
-    await paymentiframe.getByRole('textbox', { name: 'Card number' }).fill('4242 4242 4242 4242');
+      await paymentiframe.getByRole('textbox', { name: 'Card number' }).fill('4242 4242 4242 4242');
 
-    await paymentiframe.getByRole('textbox', { name: 'Expiration date' }).fill(expirationDate);
+      await paymentiframe.getByRole('textbox', { name: 'Expiration date' }).fill(expirationDate);
 
-    await paymentiframe.getByRole('textbox', { name: 'Security Code' }).fill('123');
+      await paymentiframe.getByRole('textbox', { name: 'Security Code' }).fill('123');
 
-  }
+    }
 
-  await expect(async () => {
+    await expect(async () => {
 
       await expect(page.getByRole('button', { name: 'Pay Now' })).toBeEnabled();
 
-      await page.getByRole('button', { name: 'Pay Now' }).click({ timeout: 3000 }) ;
+      await page.getByRole('button', { name: 'Pay Now' }).click({ timeout: 3000 });
 
       await expect(page).toHaveURL(/\/checkout\/.*\/complete/, { timeout: 10000 });
 
-  }).toPass();
+    }).toPass();
 
   })
 
