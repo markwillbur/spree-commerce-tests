@@ -1,0 +1,26 @@
+{
+  "user": {
+    "password": "password123",
+    "firstName": "TEST USER FIRST",
+    "lastName": "TEST USER LAST",
+    "street": "TEST STREET",
+    "city": "TEST CITY",
+    "postalCode": "1234",
+    "country": "Philippines"
+  },
+ "product": {
+    "name": "Ripped T-Shirt",
+    "price": "$40.00",
+    "size": "M",
+    "color": "GREY",
+    "quantity": "1",
+    "url": "ripped-t-shirt",
+    "cartTotal": "$40.00",
+    "promotion": "-$10.00",
+    "checkoutTotal": "$30.00"
+  },
+  "payment": {
+    "cardNumber": "4242 4242 4242 4242",
+    "securityCode": "123"
+  }
+}
